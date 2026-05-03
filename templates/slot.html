@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Slots</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .slot-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .slot {
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ccc;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            width: 120px;
+            text-align: center;
+            position: relative;
+        }
+
+        .slot:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .occupied {
+            background-color: #ff6961;
+            color: #fff;
+        }
+
+        .available {
+            background-color: #77dd77;
+            color: #fff;
+        }
+
+        .slot-number {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .slot-status {
+            font-size: 14px;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<body>
+  
+    <h1>Parking Slots</h1>
+    <div class="slot-container animate__animated animate__zoomIn">
+        {% for slot in parking_slots %}
+        
+            <div class="slot {% if slot.is_available %}available{% else %}occupied{% endif %}">
+                <div class="slot-number">Slot Number: {{ slot.slot_number }}</div>
+                <div class="slot-status">{% if slot.is_available %}Available{% else %}Occupied{% endif %}</div>
+            </div>
+    
+        {% endfor %}
+    </div>
+</body>
+
+</html>

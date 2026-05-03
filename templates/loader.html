@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #loader {
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.7);
+          z-index: 9999;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+    </style>
+    {% load static  %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+  <div id="loader">
+    <img src="{% static 'car3.gif' %}" alt="Loader">
+  </div>
+    <div class="page-container animate__animated" id="page-container content"  style="display: none;">
+        <div class="px-4  text-center border-bottom ">
+            <h1 class="display-4 fw-bold text-body-emphasis animate__animated animate__fadeInDown">INTEGRATED AI-POWERED PARKING MANAGEMENT SYSTEM
+            </h1>
+            <div class="col-lg-6 mx-auto animate__animated animate__fadeInUp">
+              <p class="lead mb-4">AI-based number plate recognition and real-time slot allocation. With a primary goal to optimize parking space utilization and enhance the visitor experience in mall settings, the system integrates YOLOv5  Utilizing web cameras to capture license plate images</p>
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                <a href="{% url 'index' %}" id="get-started-button">
+                  <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Get Started</button>
+              </a>
+              
+              </div>
+            </div>
+            <div class="overflow-hidden" style="max-height: 80vh;">
+              <div class="container px-5 animate__animated animate__zoomIn ">
+                <img src="{% static '1.jpg' %}" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy" id="animated-element">
+              </div>
+            </div>
+          </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#get-started-button').click(function(e) {
+            e.preventDefault(); // Prevent default link behavior
+            $('#page-container').addClass('animate__slideOutLeft'); // Add slide-out animation class
+            var href = $(this).attr('href'); // Get the href attribute of the clicked button
+            setTimeout(function() {
+                window.location.href = href; // Redirect to the next page after animation
+            }, 1000); // Adjust the delay time to match the animation duration
+        });
+    });
+    window.addEventListener('load', function() {
+    // Hide the loader after 3 seconds
+    setTimeout(function() {
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+    }, 3000); // 3000 milliseconds = 3 seconds
+  });
+</script>
+
+</body>
+</html>

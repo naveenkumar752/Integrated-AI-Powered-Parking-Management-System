@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-PARKING</title>
+
+    {% load static  %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+   
+    <link
+    rel="icon"
+    href=
+    "data:image/png;base64,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"
+    type="image/x-icon"
+/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<style>
+
+ </style>
+<body>
+
+    <div class="container-fluid animate__animated animate__bounceInDown  border-bottom">
+      <header class="d-flex flex-wrap justify-content-center py-3 px-3">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <img src="https://i.pinimg.com/originals/31/2f/bb/312fbbf1ba69103b8c210581af40f193.png" width="50px" height="50px" alt="">
+          <span class="fw-bold ms-3 fs-5 "> AI-POWERED PARKING MANAGEMENT SYSTEM</span>
+        </a>
+  
+        <ul class="nav nav-pills">
+          <li  class="nav-item"><a href="#" style="color: rgb(241, 119, 31);" class="nav-link" >Home</a></li>
+          <li class="nav-item"><a href="#Collaborators" style="color: rgb(241, 119, 31);" class="nav-link">Collaborators</a></li>
+          <li class="nav-item"><a href="#about" style="color: rgb(241, 119, 31);" class="nav-link">About</a></li>
+        </ul>
+      </header>
+    </div>
+
+    <div class="container my-5 animate__animated  animate__bounceIn ">
+      <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3  border shadow-lg">
+        <div class="col-lg-6 p-3 p-lg-5 pt-lg-3 animate__animated  animate__fadeInLeftBig ">
+          <h1 class="display-5 fw-bold lh-1 " style="color: rgb(241, 119, 31);">INTEGRATED AI-POWERED PARKING MANAGEMENT SYSTEM</h1>
+          <!-- <p class="lead" style="color: chocolate;">AI-based number plate recognition and real-time slot allocation. With a primary goal to optimize parking space utilization and enhance the visitor experience in mall settings, the system integrates YOLOv5  Utilizing web cameras to capture license plate images.</p> -->
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-3 mb-4 mb-lg-3">
+            <a href="{% url 'index' %}" id="get-started-button">
+              <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3" style="background-color: coral; border-color: white;">Get Started</button>
+          </a>
+          
+          </div>
+        </div>
+        <div class="col-lg-6 shadow-lg animate__animated  animate__fadeInRightBig">
+            <img class="rounded-lg-3" src="{% static 'car3.gif' %}" alt="" width="620" height="500">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container  " style="margin-top: 200px;" id="about">
+    <div class="card p-5 shadow-lg">
+      <div class="row">
+        <h1 class="text-start "  style="color: rgb(241, 119, 31);" > About</h1>
+        <div class="col">
+          <img class="img-fluid rounded-left" src="https://static.vecteezy.com/system/resources/previews/010/171/147/original/self-driving-car-with-sensors-automatically-parked-in-parking-lot-self-parking-car-system-self-parking-vehicle-smart-parking-technology-concept-illustration-vector.jpg" alt="">
+        </div>
+        <div class="col" >
+          <p class="lead my-5"  style="color: rgb(241, 119, 31);">AI-based number plate recognition and real-time slot allocation. With a primary goal to optimize parking space utilization and enhance the visitor experience in mall settings, the system integrates YOLOv5  Utilizing web cameras to capture license plate images.</p>
+
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="container my-5" id="Collaborators">
+      <div class="card p-5 shadow-lg">
+        <h1 class="text-start" style="color: rgb(241, 119, 31);">Collaborators</h1>
+        <div class="row">
+          <div class="col-6">
+            <div class="d-flex justify-content-center align-items-center flex-column">
+              <img height="200" width="300" src="https://i.imgur.com/NUJyDhp.jpeg" class=" img-fluid rounded-circle " alt="">
+              <h1 class="text-center mt-3" style="color: rgb(241, 119, 31)">NAVEEN M</h1>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex justify-content-center align-items-center flex-column pt-3">
+              <img height="150" width="300" src="https://i.imgur.com/zcQydow.jpeg" class=" img-fluid rounded-circle mt-4 pt-4 " alt="">
+              <h1 class="text-center mt-3" style="color: rgb(241, 119, 31)">NAVEENKUMAR M</h1>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Common B.TECH CSE and BSA CRESCENT INSTITUTE OF SCIENCE AND TECHNOLOGY -->
+        <div class="row">
+          <div class="col-12 text-center mt-3">
+            <h2 style="color: rgb(241, 119, 31);">B.TECH CSE</h2>
+            <h3 style="color: rgb(241, 119, 31);">BSA CRESCENT INSTITUTE OF SCIENCE AND TECHNOLOGY</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+
+  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+
+/body>
+</html>

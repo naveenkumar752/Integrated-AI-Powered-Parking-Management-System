@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Camera Stream</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to get CSRF token from cookies
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            // Function to scroll to the processed result
+            function scrollToResult() {
+                var resultContainer = $('#processed-result');
+                if (resultContainer.length > 0) {
+                    $('html, body').animate({
+                        scrollTop: resultContainer.offset().top
+                    }, 1000); // Adjust the animation speed as needed
+                }
+            }
+
+            var video = document.getElementById('video');
+            var captureBtn = document.getElementById('capture-btn');
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function (err) {
+                    console.log("An error occurred: " + err);
+                });
+
+            // Delayed image capture after 5 seconds
+            setTimeout(function () {
+                captureImage();
+            }, 5000);
+
+            $('#capture-btn').on('click', function () {
+                captureImage();
+            });
+
+            function captureImage() {
+                var canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                var imageData = canvas.toDataURL('image/jpeg');
+
+                // Get CSRF token
+                var csrftoken = getCookie('csrftoken');
+
+                $.ajax({
+                    type: "POST",
+                    url: "/capture_and_process/",
+                    headers: { 'X-CSRFToken': csrftoken },
+                    data: { image_data: imageData },
+                    success: function (response) {
+                        $('#processed-result').html(response);
+                        updateParkingSlots(); // Update parking slots after processing
+                        scrollToResult(); // Scroll to the processed result
+                    },
+                    error: function (xhr, errmsg, err) {
+                        console.log("AJAX Error: " + xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            }
+
+          
+        });
+    </script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        /* Additional CSS styles for parking slots */
+        .parking-slot {
+            width: 100px;
+            height: 50px;
+            margin: 15px;
+            text-align: center;
+            line-height: 50px;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            display: inline-block;
+        }
+     
+        .cop {
+            margin-top: 110px;
+        }
+       
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .slot-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding:10px;
+        }
+
+        .slot {
+            padding: 20px;
+            margin:10px;
+            border-radius: 10px;
+            border: 2px solid #ccc;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            width: 150px;
+            text-align: center;
+            position: relative;
+            
+        }
+
+        .slot:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .occupied {
+            background-color: #ff6961;
+            color: #fff;
+        }
+
+        .available {
+            background-color: #77dd77;
+            color: #fff;
+        }
+
+        .slot-number {
+            font-size:60px;
+            {% comment %} position:absolute; {% endcomment %}
+            font-weight: bold;
+            margin-top: 10px;
+            padding-left:40px
+            margin-bottom: 10px;
+
+        }
+
+        .slot-status {
+            font-size: 14px;
+            margin-bottom:20px;
+            margin-top:20px;z
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        #loader {
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 400px;
+          background-color: rgba(255, 255, 255, 0.7);
+          z-index: 9999;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+  
+ 
+    </style>
+</head>
+
+<body>
+    <div id="loader">
+        <img src="https://highway1.co.nz/wp-content/uploads/2020/06/BOOM-GATE.gif"  alt="Loader">
+      </div>
+
+     
+    <div class="container-fluid " id="content"  style="display: none;">
+        <div class="container-fluid animate__animated animate__bounceInDown  border-bottom" >
+            <header class="d-flex flex-wrap justify-content-center  px-3">
+              <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <img src="https://i.pinimg.com/originals/31/2f/bb/312fbbf1ba69103b8c210581af40f193.png" width="50px" height="50px" alt="">
+                <span class="fw-bold ms-3 fs-5 "> AI-POWERED PARKING MANAGEMENT SYSTEM</span>
+              </a>
+        
+              <ul class="nav nav-pills">
+                
+              </ul>
+            </header>
+          </div>
+        
+        <div class="row ">
+            <div class="col-6">
+                <div class="container mt-5">
+                   
+                    
+
+                    <div class="row" id="parking-slots-container">
+                        <div class="slot-container animate__animated animate__zoomIn">
+                            {% for slot in parking_slots %}
+                            <a href="{% url 'start_parking_transaction' slot.slot_number %}?lpnum={{lp.plate_number}}" class="text-decoration-none">
+                                <div class="slot {% if slot.is_available %}available{% else %}occupied{% endif %}">
+                                    <div class="slot-number">Slot Number: {{ slot.slot_number }}</div>
+                                    <div class="slot-number">{{ slot.lp_number }}</div>
+                                    <div class="slot-status">{% if slot.is_available %}Available{% else %}Occupied{% endif %}</div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="text-center mt-5 embed-responsive embed-responsive-16by9" id="video-container">
+                    <video class=" rounded embed-responsive-item" id="video" style="box-shadow: 2px 2px 0px 0px rgb(241, 119, 31)  ;" width="640" height="480" autoplay></video><br>
+                </div>
+                <div class="animate__animated animate__fadeInRight" id="processed-result"></div>
+            </div>
+        </div>
+        <div class="cop">
+        <div class="container-fluid py-3 mt-5 p-5" style="background-color:rgb(241, 119, 31) ;">
+            <h6 class="text-light text-center"> &copy;Copyright 2024</h6>
+         </div>
+         </div>
+     
+    </div>
+
+   
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to fetch and update parking slots
+            function updateParkingSlots() {
+                $.ajax({
+                    type: "GET",
+                    url: "/get_parking_slots/", // URL to your endpoint for fetching parking slots
+                    success: function (response) {
+                        // Clear existing slots
+                        $('#parking-slots-container').empty();
+
+                        // Append updated slots
+                        response.forEach(function (slot) {
+                            var slotDiv = $('<div>').addClass('slot')
+                                .addClass(slot.is_available ? 'available' : 'occupied')
+                                .append($('<div>').addClass('slot-number').text(slot.slot_number))
+                                .append($('<div>').addClass('lp-number').text( slot.lp_number))
+                                .append($('<div>').addClass('slot-status').text(slot.is_available ? 'Available' : 'Occupied'));
+
+                            $('#parking-slots-container').append(slotDiv);
+                        });
+                    },
+                    error: function (xhr, errmsg, err) {
+                        console.log("AJAX Error: " + xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            }
+
+            // Call updateParkingSlots initially and every 5 seconds
+            updateParkingSlots();
+            setInterval(updateParkingSlots, 5000); // Update every 5 seconds
+
+            function hideLiveCamera() {
+                setTimeout(function() {
+                    $('#video-container').hide(); // Hide the live camera container
+                }, 10000); // 10000 milliseconds = 10 seconds
+            }
+
+            // Call hideLiveCamera when the processed result is displayed
+            $('#processed-result').on('DOMSubtreeModified', function() {
+                hideLiveCamera();
+            });
+        });
+
+        
+
+        window.addEventListener('load', function() {
+            // Hide the loader after 3 seconds
+            setTimeout(function() {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            }, 3000); // 3000 milliseconds = 3 seconds
+        });
+
+    </script>
+</body>
+
+</html>

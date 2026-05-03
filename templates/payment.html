@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    
+    <link
+    rel="icon"
+    href=
+    "data:image/png;base64,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"
+    type="image/x-icon"
+     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      .card {
+        width: 450px;
+        height: 550px;
+        transition: all 0.2s;
+        position: absolute;
+        cursor: pointer;
+        top: 15%;
+        left: 35%;
+      }
+
+      .card-inner {
+        width: inherit;
+        height: inherit;
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
+        border-radius: 8px;
+      }
+
+      .card:hover {
+        transform: translate(0px, -16px);
+      }
+
+      .circle {
+        width: 100px;
+        height: 100px;
+        background: radial-gradient(#ffbc96, #f1771f);
+        border-radius: 50%;
+        position: absolute;
+        animation: move-up6 2s ease-in infinite alternate-reverse;
+      }
+
+      .circle:nth-child(1) {
+        top: -25px;
+        left: -25px;
+      }
+
+      .circle:nth-child(2) {
+        bottom: -25px;
+        right: -25px;
+        animation-name: move-down1;
+      }
+
+      @keyframes move-up6 {
+        to {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes move-down1 {
+        to {
+          transform: translateY(10px);
+        }
+      }
+
+      body {
+        background-color: #ffa500;
+        {% comment %} background-image: url('https://img.freepik.com/free-vector/green-wallpaper-gradient_23-2148370792.jpg'); {% endcomment %}
+        background-size: cover;
+        background-repeat: no-repeat;
+        /* You can add more styles here if needed */
+      }
+
+
+
+      .cssbuttons-io {
+        position: relative;
+        font-family: inherit;
+        font-weight: 500;
+        font-size: 18px;
+        letter-spacing: 0.05em;
+        border-radius: 0.8em;
+        cursor: pointer;
+        border: none;
+        background: linear-gradient(to right, #8e2de2, #4a00e0);
+        color: ghostwhite;
+        overflow: hidden;
+      }
+      
+      .cssbuttons-io svg {
+        width: 1.2em;
+        height: 1.2em;
+        margin-right: 0.5em;
+        color:white;
+      }
+      
+      .cssbuttons-io span {
+        position: relative;
+        z-index: 10;
+        transition: color 0.4s;
+        display: inline-flex;
+        align-items: center;
+        color:white;
+        padding: 0.8em 1.2em 0.8em 1.05em;
+      }
+      
+      .cssbuttons-io::before,
+      .cssbuttons-io::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color:white;
+        z-index: 0;
+      }
+      
+      .cssbuttons-io::before {
+        content: "";
+        background: #000;
+        width: 120%;
+        left: -10%;
+        transform: skew(30deg);
+        color:white;
+        transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+      }
+      
+      .cssbuttons-io:hover::before {
+        transform: translate3d(100%, 0, 0);
+      }
+      
+      .cssbuttons-io:active {
+        transform: scale(0.95);
+      }
+
+
+      {% comment %} second card css {% endcomment %}
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 500px;
+        background: #444;
+        border-radius: 10px;
+      } 
+      
+      .card2 {
+        position: fixed;
+        top:3%;
+        left:25%;
+        background: #333;
+        width: 800px;
+        height: 700px;
+        border-radius: 10px;
+        {% comment %} padding: 2rem; {% endcomment %}
+        color: #aaa;
+        box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
+          0 0 1rem rgba(0,0,0,0.2);
+        overflow: hidden;
+      }
+      
+      .card__image-container {
+        margin: -2rem -2rem 1rem -2rem;
+      }
+      
+      .card__line {
+        opacity: 0;
+        animation: LineFadeIn .8s .8s forwards ease-in;
+      }
+      
+      .card__image {
+        opacity: 0;
+        animation: ImageFadeIn .8s 1.4s forwards;
+      }
+      
+      .card__title {
+        color: white;
+        margin-left:-170px;
+        margin-top: 1 rem;
+        margin-bottom: 10px;
+        font-weight: 800;
+        font-size: 3rem;
+        line-height: 1.25;
+        letter-spacing: 0.01em;
+      }
+      
+      .card__content {
+        margin-top: 1rem;
+        position:absolute;
+        top:15%;
+        left:45%;
+        opacity: 0;
+        animation: ContentFadeIn .8s 1.6s forwards;
+      }
+      
+      .card__svg {
+        position: absolute;
+        left: 0;
+        top: 115px;
+      }
+      
+      @keyframes LineFadeIn {
+        0% {
+          opacity: 0;
+          d: path("M 0 300 Q 0 300 0 300 Q 0 300 0 300 C 0 300 0 300 0 300 Q 0 300 0 300 ");
+          stroke: #fff;
+        }
+      
+        50% {
+          opacity: 1;
+          d: path("M 0 300 Q 50 300 100 300 Q 250 300 350 300 C 350 300 500 300 650 300 Q 750 300 800 300");
+          stroke: #888BFF;
+        }
+      
+        100% {
+          opacity: 1;
+          d: path("M -2 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 802 400");
+          stroke: #545581;
+        }
+      }
+      
+      @keyframes ContentFadeIn {
+        0% {
+          transform: translateY(-1rem);
+          opacity: 0;
+        }
+      
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes ImageFadeIn {
+        0% {
+          transform: translate(-.5rem, -.5rem) scale(1.05);
+          opacity: 0;
+          filter: blur(2px);
+        }
+      
+        50% {
+          opacity: 1;
+          filter: blur(2px);
+        }
+      
+        100% {
+          transform: translateY(0) scale(1.0);
+          opacity: 1;
+          filter: blur(0);
+        }
+      }
+
+
+
+      .pl {
+        width: 6em;
+        height: 6em;
+        position:absolute;
+        top:70%;
+        left:40%;
+        
+      }
+      
+      .pl__ring {
+        animation: ringA 2s linear infinite;
+      }
+      
+      .pl__ring--a {
+        stroke: #f42f25;
+      }
+      
+      .pl__ring--b {
+        animation-name: ringB;
+        stroke: #f49725;
+      }
+      
+      .pl__ring--c {
+        animation-name: ringC;
+        stroke: #255ff4;
+      }
+      
+      .pl__ring--d {
+        animation-name: ringD;
+        stroke: #f42582;
+      }
+      
+      /* Animations */
+      @keyframes ringA {
+        from, 4% {
+          stroke-dasharray: 0 660;
+          stroke-width: 20;
+          stroke-dashoffset: -330;
+        }
+      
+        12% {
+          stroke-dasharray: 60 600;
+          stroke-width: 30;
+          stroke-dashoffset: -335;
+        }
+      
+        32% {
+          stroke-dasharray: 60 600;
+          stroke-width: 30;
+          stroke-dashoffset: -595;
+        }
+      
+        40%, 54% {
+          stroke-dasharray: 0 660;
+          stroke-width: 20;
+          stroke-dashoffset: -660;
+        }
+      
+        62% {
+          stroke-dasharray: 60 600;
+          stroke-width: 30;
+          stroke-dashoffset: -665;
+        }
+      
+        82% {
+          stroke-dasharray: 60 600;
+          stroke-width: 30;
+          stroke-dashoffset: -925;
+        }
+      
+        90%, to {
+          stroke-dasharray: 0 660;
+          stroke-width: 20;
+          stroke-dashoffset: -990;
+        }
+      }
+      
+      @keyframes ringB {
+        from, 12% {
+          stroke-dasharray: 0 220;
+          stroke-width: 20;
+          stroke-dashoffset: -110;
+        }
+      
+        20% {
+          stroke-dasharray: 20 200;
+          stroke-width: 30;
+          stroke-dashoffset: -115;
+        }
+      
+        40% {
+          stroke-dasharray: 20 200;
+          stroke-width: 30;
+          stroke-dashoffset: -195;
+        }
+      
+        48%, 62% {
+          stroke-dasharray: 0 220;
+          stroke-width: 20;
+          stroke-dashoffset: -220;
+        }
+      
+        70% {
+          stroke-dasharray: 20 200;
+          stroke-width: 30;
+          stroke-dashoffset: -225;
+        }
+      
+        90% {
+          stroke-dasharray: 20 200;
+          stroke-width: 30;
+          stroke-dashoffset: -305;
+        }
+      
+        98%, to {
+          stroke-dasharray: 0 220;
+          stroke-width: 20;
+          stroke-dashoffset: -330;
+        }
+      }
+      
+      @keyframes ringC {
+        from {
+          stroke-dasharray: 0 440;
+          stroke-width: 20;
+          stroke-dashoffset: 0;
+        }
+      
+        8% {
+          stroke-dasharray: 40 400;
+          stroke-width: 30;
+          stroke-dashoffset: -5;
+        }
+      
+        28% {
+          stroke-dasharray: 40 400;
+          stroke-width: 30;
+          stroke-dashoffset: -175;
+        }
+      
+        36%, 58% {
+          stroke-dasharray: 0 440;
+          stroke-width: 20;
+          stroke-dashoffset: -220;
+        }
+      
+        66% {
+          stroke-dasharray: 40 400;
+          stroke-width: 30;
+          stroke-dashoffset: -225;
+        }
+      
+        86% {
+          stroke-dasharray: 40 400;
+          stroke-width: 30;
+          stroke-dashoffset: -395;
+        }
+      
+        94%, to {
+          stroke-dasharray: 0 440;
+          stroke-width: 20;
+          stroke-dashoffset: -440;
+        }
+      }
+      
+      @keyframes ringD {
+        from, 8% {
+          stroke-dasharray: 0 440;
+          stroke-width: 20;
+          stroke-dashoffset: 0;
+        }
+      
+        16% {
+          stroke-dasharray: 40 400;
+          stroke-width: 30;
+          stroke-dashoffset: -5;
+        }
+      
+        36% {
+          stroke-dasharray: 40 400;
+          stroke-width: 30;
+          stroke-dashoffset: -175;
+        }
+      
+        44%, 50% {
+          stroke-dasharray: 0 440;
+          stroke-width: 20;
+          stroke-dashoffset: -220;
+        }
+      
+        58% {
+          stroke-dasharray: 40 400;
+          stroke-width: 30;
+          stroke-dashoffset: -225;
+        }
+      
+        78% {
+          stroke-dasharray: 40 400;
+          stroke-width: 30;
+          stroke-dashoffset: -395;
+        }
+      
+        86%, to {
+          stroke-dasharray: 0 440;
+          stroke-width: 20;
+          stroke-dashoffset: -440;
+        }
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="card text-center">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="card-inner">
+        <h3 class="text-light bg-primary p-3 rounded-3">Payment</h3>
+        <h3 class="text-center text-primary">{{ vehicle }}</h3>
+        <h3 class="text-center text-primary">₹ {{ price }}</h3>
+        <div class="text-center">
+          {% if price == '40' %}
+          <img class="img-fluid" width="250px" height="250px" src="{% static '40.jpg' %}" alt="" />
+          {% elif price == '60' %}
+          <img src="{% static '60.jpg' %}" class="img-fluid" width="250px" height="250px" alt="" />
+          {% elif price == '80' %}
+          <img src="{% static '80.jpg' %}" class="img-fluid" width="250px" height="250px" alt="" />
+          {% elif price == '100' %}
+          <img src="{% static '100.jpg' %}" class="img-fluid" width="250px" height="250px" alt="" />
+          {% elif price == '120' %}
+          <img src="{% static '120.jpg' %}" class="img-fluid" width="250px" height="250px" alt="" />
+          {% elif price == '140' %}
+          <img src="{% static '140.jpg' %}" class="img-fluid" width="250px" height="250px" alt="" />
+          {% elif price == '160' %}
+          <img src="{% static '160.jpg' %}" class="img-fluid" width="250px" height="250px" alt="" />
+          {% endif %}
+        </div>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <a href="{% url 'transaction_receipt' %}?price={{ price }}&vehicle={{ vehicle }}" role="button">
+            <button class="cssbuttons-io btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
+              <span>YES</span>
+            </button>
+          </a>
+          <button id="noBtn" type="button" class="cssbuttons-io btn btn-outline-info btn-lg px-4" onclick="handleNoButtonClick()">
+            <span>No</span>
+          </button>
+        </div>
+        
+      </div>
+    </div>
+    <div id="countdownContent" class="" style="display: none;">
+        <div class="card2">
+          <div class="">
+          </div>
+          <svg class="card__svg" viewBox="0 0 800 500">
+            <path d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400 L 800 500 L 0 500" stroke="transparent" fill="#333"></path>
+            <path class="card__line" d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400" stroke="pink" stroke-width="3" fill="transparent"></path>
+          </svg>
+          <div class="card__content">
+            <p class="card__title">Payment Failed !!!</p>
+            <h4 id="countdown" style="font-size: 100px">15</h4>
+            <p>Retrying....</p>
+            
+          </div>
+          <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
+            <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+        </svg>
+        </div>
+      </div>
+  
+    <script>
+      // Function to handle No button click
+      function handleNoButtonClick() {
+        document.getElementById("countdownContent").style.display = "block";
+        var count = 15;
+        var countdown = setInterval(function() {
+          document.getElementById("countdown").textContent = count;
+          count--;
+          if (count < 0) {
+            clearInterval(countdown);
+            location.reload();
+          }
+        }, 1000); // 1000 milliseconds = 1 second
+      }
+    </script>
+  </body>
+  
+  
+  
+</html>

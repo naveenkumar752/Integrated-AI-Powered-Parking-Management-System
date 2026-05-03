@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Transaction Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<style>
+    .e-card {
+        margin: 100px auto;
+        background: transparent;
+        box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.45);
+        position: relative;
+        width: 440px;
+        height: 630px;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      
+      .wave {
+        position: absolute;
+        width: 540px;
+        height: 700px;
+        opacity: 0.6;
+        left: 0;
+        top: 0;
+        margin-left: -50%;
+        margin-top: -70%;
+        background: linear-gradient(744deg,#af40ff,#5b42f3 60%,#00ddeb);
+      }
+      
+      .icon {
+        width: 3em;
+        margin-top: -1em;
+        padding-bottom: 1em;
+      }
+      
+      .infotop {
+        text-align: center;
+        font-size: 20px;
+        position: absolute;
+        top: 5.6em;
+        left: 0;
+        right: 0;
+        color: rgb(255, 255, 255);
+        font-weight: 600;
+      }
+      
+      .name {
+        font-size: 14px;
+        font-weight: 100;
+        position: relative;
+        top: 1em;
+        text-transform: lowercase;
+      }
+      
+      .wave:nth-child(2),
+      .wave:nth-child(3) {
+        top: 210px;
+      }
+      
+      .playing .wave {
+        border-radius: 40%;
+        animation: wave 3000ms infinite linear;
+      }
+      
+      .wave {
+        border-radius: 40%;
+        animation: wave 55s infinite linear;
+      }
+      
+      .playing .wave:nth-child(2) {
+        animation-duration: 4000ms;
+      }
+      
+      .wave:nth-child(2) {
+        animation-duration: 50s;
+      }
+      
+      .playing .wave:nth-child(3) {
+        animation-duration: 5000ms;
+      }
+      
+      .wave:nth-child(3) {
+        animation-duration: 45s;
+      }
+      
+      @keyframes wave {
+        0% {
+          transform: rotate(0deg);
+        }
+      
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+
+      .button {
+        line-height: 1;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: .75rem;
+        background-color: var(--clr);
+        color: #fff;
+        border-radius: 10rem;
+        font-weight: 600;
+        padding: .75rem 1.5rem;
+        padding-left: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: background-color .3s;
+      }
+      
+      .button__icon-wrapper {
+        flex-shrink: 0;
+        width: 25px;
+        height: 25px;
+        position: relative;
+        color: var(--clr);
+        background-color: #fff;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+      
+      .button:hover {
+        background-color: #000;
+      }
+      
+      .button:hover .button__icon-wrapper {
+        color: #000;
+      }
+      
+      .button__icon-svg--copy {
+        position: absolute;
+        transform: translate(-150%, 150%);
+      }
+      
+      .button:hover .button__icon-svg:first-child {
+        transition: transform .3s ease-in-out;
+        transform: translate(150%, -150%);
+      }
+      
+      .button:hover .button__icon-svg--copy {
+        transition: transform .3s ease-in-out .1s;
+        transform: translate(0);
+      }
+</style>
+
+</head>
+
+<body>
+
+       <div class="e-card playing">
+        <div class="image"></div>
+        
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+       
+
+      
+            <div class="infotop">
+                <h1 class="text-light bg-primary p-3 ">Transaction Details</h1>
+          <br>      
+         <p style=color:"black"> {{ parking_transaction.vehicle }}</p>
+         <h1> {{ parking_transaction.parking_slot }}</h1>
+         <p><strong>Entry </strong> {{ parking_transaction.entry_time }}</p>
+         <p><strong>Exit </strong> {{ parking_transaction.exit_time }}</p>
+         <h1>₹{{ price }}</h1>
+
+         <a style="--clr: #7808d0" class="button" href="{% url 'payment' %}?price={{price}}&vehicle={{ parking_transaction.vehicle }}">
+            <span class="button__icon-wrapper">
+                <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                    <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                </svg>
+                
+                <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                    <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                </svg>
+            </span>
+            Pay
+        </a>
+
+         {% comment %} <a  class="btn btn-success">Pay</a> {% endcomment %}
+      <br>
+           
+      </div>
+
+
+</body>
+
+</html>
